@@ -3,11 +3,25 @@
 using namespace std;
 
 //Time: O(n2)
+//Time2: O(n)
+
+int findEquilibriumIndex2(int* arr, int n) {
+    int sum = 0;
+    int leftSum = 0;
+    for (int i=0; i<n; i++) {
+        sum += arr[i];
+    }
+    for (int i=0; i<n; i++) {
+        sum -= arr[i];
+        if (i!=0 && i!=n-1 && sum == leftSum) {
+            return i;
+        }
+        leftSum += arr[i];
+    }
+    return -1;
+}
 
 int findEquilibriumIndex(int* arr, int n) {
-    if (n%2 != 1) { //array must be odd to have eq. index
-        return -1;
-    }
     for (int i=1; i<n-1; i++) {
         int sumLeft = 0;
         int sumRight = 0;
@@ -27,9 +41,9 @@ int findEquilibriumIndex(int* arr, int n) {
 //Prints equilibrium index where sum of elements left of
 //index = sum of elements right of index. -1 if no equilibrium index found
 int main() {
-    int n=9;
-    int arr[n] = {-7,1,5,2,-4,3,0,3,-5};
-    int result = findEquilibriumIndex(arr,n);
+    int arr[] = {-7,1,5,4,-4,3,2,2};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int result = findEquilibriumIndex2(arr,n);
     cout << result;
     return 0;
 }
